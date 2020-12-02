@@ -17,4 +17,4 @@
 
     private:
         vector<pair<pair<double, double>, unsigned>> airportmap;
- }
+ };

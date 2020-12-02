@@ -1,5 +1,5 @@
-EXENAME = intro
-OBJS = main.o PNG.o HSLAPixel.o lodepng.o intro.o
+EXENAME = finalproj
+OBJS = main.o graph.o airports.o
 
 CXX = clang++
 CXXFLAGS = $(CS225) -std=c++1y -stdlib=libc++ -c -g -O0 -Wall -Wextra -pedantic
@@ -32,20 +32,14 @@ output_msg: ; $(CLANG_VERSION_MSG)
 $(EXENAME) : output_msg $(OBJS)
 	$(LD) $(OBJS) $(LDFLAGS) -o $(EXENAME)
 
-main.o : main.cpp intro.h cs225/PNG.h cs225/HSLAPixel.h
+main.o : main.cpp airports.h graph/graph.h
 	$(CXX) $(CXXFLAGS) main.cpp
 
-intro.o : intro.cpp intro.h
-	$(CXX) $(CXXFLAGS) intro.cpp
+graph.o : graph/graph.cpp graph/graph.h
+	$(CXX) $(CXXFLAGS) graph/graph.cpp
 
-PNG.o : cs225/PNG.cpp cs225/PNG.h cs225/HSLAPixel.h cs225/lodepng/lodepng.h
-	$(CXX) $(CXXFLAGS) cs225/PNG.cpp
-
-HSLAPixel.o : cs225/HSLAPixel.cpp cs225/HSLAPixel.h
-	$(CXX) $(CXXFLAGS) cs225/HSLAPixel.cpp
-
-lodepng.o : cs225/lodepng/lodepng.cpp cs225/lodepng/lodepng.h
-	$(CXX) $(CXXFLAGS) cs225/lodepng/lodepng.cpp
+airports.o : airports.h airports.cpp
+	$(CXX) $(CXXFLAGS) airports.cpp
 
 clean :
 	-rm -f *.o $(EXENAME) test

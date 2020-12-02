@@ -40,7 +40,10 @@ Airports::Airports(string txt){
             double lat = stod(latitude, NULL);
             double lon = stod(longitude, NULL);
             unsigned ID1 = stoul(ID, NULL, 10);
-            airportmap.push_back(pair<pair<double, double>(lat, lon), unsigned ID1>);
+            //airportmap.push_back(pair<pair<double, double>(lat, lon), unsigned ID1>);
+            pair<double, double> latlng(lat,lon);
+            pair<pair<double, double>, unsigned> airport(latlng, ID1);
+            airportmap.push_back(airport);
         }
     }
 

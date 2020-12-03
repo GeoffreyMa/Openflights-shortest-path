@@ -25,6 +25,9 @@
         void map_routes(string txt);
         vector<int> dijkstra(int startID, int destID);
 
+        void DFSHelper(int startID, vector<bool>& visited);
+        void DFS(int startID);
+
     private:
 
         /*
@@ -44,5 +47,9 @@
         */
         void airport_reader(string txt);
         string rmvcomma(stringstream & ss, string result, string temp);
-        
+
+        /**
+         * DFS traversal, record the whole graph traversed.
+        */
+        vector<Vertex> traversal_;
  };

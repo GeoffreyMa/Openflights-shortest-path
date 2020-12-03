@@ -147,3 +147,27 @@ vector<int> AirportsMap::dijkstra(int startID, int destID){
     path.push_back(startID);
     return path;
 }
+
+// DFS traversal helper
+void AirportsMap::DFSHelper(int startID, vector<bool>& visited) { // call visited with reference?? checkcheckcheckcheck here.
+    visited[startID] = true;
+    traversal_.push_back(to_string(startID)); // Since we want to traversal vertices, I convert the int type to Vertex type for convinence.
+    vector<Vertex>::iterator it;
+    for (it = g_.getAdjacent(to_string(startID)).begin(); it != g_.getAdjacent(to_string(startID)).end(); ++it) {
+        Vertex at = *it;
+        int atNum = stoi(at); // checkcheckcheck here;  not sure if this conversion is right. 
+        if (visited[atNum]) {
+            DFSHelper(atNum, visited);
+        }
+    }
+}
+
+// DFS main function
+void AirportsMap::DFS(int startID) {
+    vector<bool> visited;
+    if (traversal_.size() != 0) {
+    traversal_.erase(traversal_.begin(), traversal_.end());
+    }
+    visited.resize(airports.size(), false);
+    DFSHelper(startID, visited);
+}

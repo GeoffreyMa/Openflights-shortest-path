@@ -14,6 +14,7 @@
  class Airports {
     public:
         Airports(string txt);
+        string rmvcomma(stringstream & ss, string result, string temp);
 
     private:
         vector<pair<pair<double, double>, unsigned>> airportmap;

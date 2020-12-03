@@ -70,6 +70,7 @@ void AirportsMap::airport_reader(string txt) {
                     airports[ID1] = cur_airport;
                 }
             }
+            // std::cout << airports[ID1].getID() << std::endl;
         }
     }    
 }
@@ -81,9 +82,12 @@ void AirportsMap::airport_reader(string txt) {
 */
 string AirportsMap::rmvcomma(stringstream & ss, string result, string temp){
     char c;
-    if (ss.get(c) && c == 32){
+    ss.get(c);
+    if (c == 32){
         getline(ss, temp, ',');
         result += temp;
+    } else {
+        ss.unget();
     }
     return result;
 }

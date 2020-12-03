@@ -19,7 +19,7 @@ AirportsMap::AirportsMap() :
 }
 
 AirportsMap::AirportsMap(string txt) : 
-       g_(Graph(true, true)){
+    g_(Graph(true, true)){
     airports = std::map<int, graphInfo::Airport>();
     airport_reader(txt);  
 }

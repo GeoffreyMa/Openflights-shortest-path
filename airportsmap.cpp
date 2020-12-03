@@ -61,7 +61,6 @@ void AirportsMap::airport_reader(string txt) {
             pair<double, double> latlng(lat,lon);
             graphInfo::Airport cur_airport(latlng, name, ID1);
 
-
             //add the airport to the map
             if (airports.empty()) {
                 airports[ID1] = cur_airport;
@@ -87,4 +86,8 @@ string AirportsMap::rmvcomma(stringstream & ss, string result, string temp){
         result += temp;
     }
     return result;
+}
+
+void AirportsMap::map_routes(string txt){
+    // initialize graph
 }

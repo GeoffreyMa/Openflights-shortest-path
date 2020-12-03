@@ -40,8 +40,8 @@
         * Helper functions that reads the airports file.
         * @param the name of the file to be read.
         */
-        void airport_reader(std::string txt);
-
+        void airport_reader(string txt);
+        void map_routes(string txt);
         string rmvcomma(stringstream & ss, string result, string temp);
         
  };

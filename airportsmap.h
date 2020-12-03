@@ -23,6 +23,7 @@
         AirportsMap(string txt);
         AirportsMap();
         void map_routes(string txt);
+        vector<int> dijkstra(int startID, int destID);
 
     private:
 

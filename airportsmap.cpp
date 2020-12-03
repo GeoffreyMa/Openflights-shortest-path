@@ -135,3 +135,15 @@ void AirportsMap::map_routes(string txt){
         }
     }
 }
+
+// the shortest path is represented by a vector of variable type int
+vector<int> AirportsMap::dijkstra(int startID, int destID){
+    string start = to_string(startID);
+    string dest = to_string(destID);
+    vector<int> path;
+    if (g_.vertexExists(start) == false || g_.vertexExists(dest) == false){
+        return path;
+    }
+    path.push_back(startID);
+    return path;
+}

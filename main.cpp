@@ -1,7 +1,9 @@
-#include "airports.h"
+
+#include "airportsmap.h"
 #include <iostream>
 
 int main (int argc, const char * argv[]) {
-    Airports("data/airports.txt");
+    std::string airport_file = argv[1];
+    AirportsMap a_map(airport_file);
     return 0;
 }

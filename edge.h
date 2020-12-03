@@ -8,6 +8,8 @@
 #include <string>
 #include <limits.h>
 
+#include "graphInfo/Airport.h"
+
 using std::string;
 
 typedef string Vertex;

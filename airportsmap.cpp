@@ -29,7 +29,6 @@ void AirportsMap::airport_reader(string txt) {
     if (inFile.is_open()){
         string line;
         while (getline(inFile, line)){
-            //std::cout << line << std::endl;
             stringstream ss(line);
             /*
                 airportID / name / city / county / IATA / ICAO / latitude / longitude /
@@ -99,12 +98,15 @@ void AirportsMap::map_routes(string txt){
         string line;
         while (getline(inFile, line)){
             stringstream ss(line);
-            string temp, ID1, ID2;
+            string temp, airlineID, ID1, ID2;
             /*  
-                - / - / - / ID1 / - / ID2 / - / - / -
+                - / AirlineID / - / ID1 / - / ID2 / - / - / -
                 9 in one line, take 4th and 6th
             */
             for (int i = 0; i < 9; i++){
+                if (i == 1) {
+                    getline(ss, airlineID, ',');
+                }
                 if (i == 3){
                     getline(ss, ID1, ',');
                 } else if (i == 5){
@@ -131,6 +133,10 @@ void AirportsMap::map_routes(string txt){
             if (g_.edgeExists(ID1, ID2) == false){
                 g_.insertEdge(ID1, ID2);
                 g_.setEdgeWeight(ID1, ID2, 0);
+                if (airlineID != "\\N")  {
+                    g_.setEdgeLabel(ID1, ID2, airlineID);
+                }
+                
             }
         }
     }

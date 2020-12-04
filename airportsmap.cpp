@@ -162,7 +162,7 @@ void AirportsMap::DFSHelper(int startID, vector<bool>& visited) { // call visite
     for (it = g_.getAdjacent(to_string(startID)).begin(); it != g_.getAdjacent(to_string(startID)).end(); ++it) {
         Vertex at = *it;
         int atNum = stoi(at); // checkcheckcheck here;  not sure if this conversion is right. 
-        if (visited[atNum]) {
+        if (!visited[atNum]) { // if unvisited, recursive call.
             DFSHelper(atNum, visited);
         }
     }

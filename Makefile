@@ -23,7 +23,7 @@ CLANG_VERSION_MSG = $(warning $(ccyellow) Looks like you are not on EWS. Be sure
 endif
 endif
 
-.PHONY: all clean output_msg
+.PHONY: output_msg
 
 all : $(EXENAME)
 
@@ -32,25 +32,23 @@ output_msg: ; $(CLANG_VERSION_MSG)
 $(EXENAME) : output_msg $(OBJS)
 	$(LD) $(OBJS) $(LDFLAGS) -o $(EXENAME)
 
-main.o : main.cpp airportsmap.h graph.h graphInfo/Airport.h
+main.o : main.cpp airportsmap.h graph.h
 	$(CXX) $(CXXFLAGS) main.cpp
 
 graph.o : graph.cpp graph.h
 	$(CXX) $(CXXFLAGS) graph.cpp
 
-airportsmap.o : airportsmap.h airportsmap.cpp
+airportsmap.o : airportsmap.h airportsmap.cpp graphInfo/Airport.h
 	$(CXX) $(CXXFLAGS) airportsmap.cpp
 
 Airport.o : graphInfo/Airport.h graphInfo/Airport.cpp
 	$(CXX) $(CXXFLAGS) graphInfo/Airport.cpp
 
-test: output_msg tests.o airportsmap.o Airport.o
-	$(LD) tests.o airportsmap.o Airport.o $(LDFLAGS) -o test
+test: output_msg tests.o airportsmap.o graph.o Airport.o
+	$(LD) tests.o airportsmap.o graph.o $(LDFLAGS) -o test
 
-tests.o: tests/tests.cpp airportsmap.h graphInfo/Airport.h
-	$(CXX) $(CXXFLAGS) tests/tests.cpp	
-
-
+tests.o: tests/tests.cpp catch/catch.hpp airportsmap.h graph.h graphInfo/Airport.h
+	$(CXX) $(CXXFLAGS) tests/tests.cpp
 
 clean :
 	-rm -f *.o $(EXENAME) test

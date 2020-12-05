@@ -6,7 +6,7 @@
 
 namespace graphInfo {
     Airport::Airport() : 
-      latlng_(std::pair<double, double>(0,0)), name_(""), id_(0) {
+      latlng_({0,0}), name_(""), id_(0) {
 
     }
 

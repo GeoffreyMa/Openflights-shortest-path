@@ -177,3 +177,9 @@ void AirportsMap::DFS(int startID) {
     visited.resize(airports.size(), false);
     DFSHelper(startID, visited);
 }
+
+
+//getter function
+Graph AirportsMap::getGraph() {
+    return g_;
+}

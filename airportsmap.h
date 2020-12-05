@@ -28,6 +28,8 @@
         void DFSHelper(int startID, vector<bool>& visited);
         void DFS(int startID);
 
+        Graph getGraph();
+
     private:
 
         /*

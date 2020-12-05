@@ -1,0 +1,3 @@
+1,"A Airport","A City","A County","AAP","AAAP",-1,1,5282,10,"U","Pacific/Port_Moresby","airport","OurAirports"
+2,"B Airport","B City","B County","BAP","BBAP",-2,2,20,10,"U","Pacific/Port_Moresby","airport","OurAirports"
+3,"C Airport","C City","C County","CAP","CCAP",-3,3,5388,10,"U","Pacific/Port_Moresby","airport","OurAirports"

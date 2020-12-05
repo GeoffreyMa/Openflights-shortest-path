@@ -44,6 +44,14 @@ airportsmap.o : airportsmap.h airportsmap.cpp
 Airport.o : graphInfo/Airport.h graphInfo/Airport.cpp
 	$(CXX) $(CXXFLAGS) graphInfo/Airport.cpp
 
+test: output_msg tests.o airportsmap.o Airport.o
+	$(LD) tests.o airportsmap.o Airport.o $(LDFLAGS) -o test
+
+tests.o: tests/tests.cpp airportsmap.h graphInfo/Airport.h
+	$(CXX) $(CXXFLAGS) tests/tests.cpp	
+
+
+
 clean :
 	-rm -f *.o $(EXENAME) test
 

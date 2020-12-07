@@ -120,7 +120,7 @@ void AirportsMap::map_routes(string txt){
             if (ID1 == "\\N" || ID2 == "\\N"){
                 continue;
             }
-            
+            double distance = getDis(stoi(ID1), stoi(ID2)); // calculate the distance between two airport.
             if (g_.vertexExists(ID1) == false){
                 g_.insertVertex(ID1);
             }
@@ -130,7 +130,7 @@ void AirportsMap::map_routes(string txt){
 
             if (g_.edgeExists(ID1, ID2) == false){
                 g_.insertEdge(ID1, ID2);
-                g_.setEdgeWeight(ID1, ID2, 0);
+                g_.setEdgeWeight(ID1, ID2, distance); // get distance for weight. weight存放了 vertex之间的距离
                 if (airlineID != "\\N")  {
                     g_.setEdgeLabel(ID1, ID2, airlineID);
                 }
@@ -141,15 +141,77 @@ void AirportsMap::map_routes(string txt){
 }
 
 // the shortest path is represented by a vector of variable type int
-vector<int> AirportsMap::dijkstra(int startID, int destID){
-    string start = to_string(startID);
-    string dest = to_string(destID);
-    vector<int> path;
-    if (g_.vertexExists(start) == false || g_.vertexExists(dest) == false){
-        return path;
+vector<pair<int, int>> AirportsMap::dijkstra(int startID){
+    vector<pair<int, int>> table;
+    vector<double> shortestDis;
+    vector<bool> visited;
+    string start = to_string(startID);  
+    //string dest = to_string(destID);
+    if (g_.vertexExists(start) == false){
+        return table;
     }
-    path.push_back(startID);
-    return path;
+    // set table, visited, shortestDis vectors
+    for (int i = 0; i <= airports.size(); i++){
+        table.push_back(pair<int, int> (i, 0));//////////cehcccckccccccccccckkkkkkkkkkk
+        visited[i] = false;
+        shortestDis[i] = 32767;
+        if (i == startID){
+            visited[i] = true;
+        }
+    }
+    shortestDis[startID] = 0;
+
+    // set knownmin to startID
+    //--------------------------------------------------晚上写的 帮忙check一下谢啦w(ﾟДﾟ)w， 不一定对ooooooooooooo；两个loop应该可以精简一下但是我懒得弄了
+    map<int, int> mapTable; // creatd a map for returning all the vertex and previous vertex;这里我用map存了路径 因为我在想如果输入一个起始的点不一定和整个graph连接？？ 不太确定；
+    mapTable[startID] = 0; // initilize the previous vertex For startID；
+    queue<int> q;
+    q.push(startID);
+    while(!q.empty()) {
+        int tempID  = q.front(); //current visiting ID;
+        q.pop();
+        vector<Vertex> IDs = g_.getAdjacent(to_string(tempID));
+        for (Vertex lookup: IDs) {
+        if (shortestDis[tempID] + g_.getEdgeWeight(to_string(tempID), lookup) < shortestDis[stoi(lookup)] && !visited[stoi(lookup)]) {
+            shortestDis[stoi(lookup)] = shortestDis[tempID] + g_.getEdgeWeight(to_string(tempID), lookup); //update shortest path
+            mapTable[stoi(lookup)] = tempID; //update previous vertex;
+            }
+
+        }
+
+
+
+        vector<Vertex> adjIDs = g_.getAdjacent(to_string(tempID)); //current vertex周围所有的vertices；
+        double mindis = shortestDis[stoi(adjIDs[0])]; //initialize 最小距离
+        int nextVertex = -1; //initialize 下一个visited的vertex；
+        for (int i = 0; i < adjIDs.size(); i++) {
+            if (shortestDis[stoi(adjIDs[i])] <= mindis && !visited[stoi(adjIDs[i])]) { //找到最小距离的vertex 并且没有visited过；
+                mindis = shortestDis[stoi(adjIDs[i])]; //有可能出现第一个最短但是是visited过的现象， 所以check <= mindis;
+                nextVertex = stoi(adjIDs[i]);
+            }
+        }
+        if (nextVertex != -1) { //
+            visited[nextVertex] = true;
+            q.push(nextVertex);
+        }
+    }
+    //最后return mapTable；
+//-----------------------------------------------------------------------------------------------------------------------------------------以上
+
+
+    int knownmin = startID;
+
+    while (knownmin != 0){
+        vector<Vertex> v = g_.getAdjacent(to_string(knownmin));
+        for (int i = 0; i < v.size(); i++){
+            int weight = g_.getEdgeWeight(to_string(knownmin), v[i]);
+            
+        }
+        knownmin = 0;
+    }
+
+    
+    return table;
 }
 
 // DFS traversal helper
@@ -170,7 +232,7 @@ void AirportsMap::DFSHelper(int startID, vector<bool>& visited) { // call visite
 void AirportsMap::DFS(int startID) {
     vector<bool> visited;
     if (traversal_.size() != 0) {
-    traversal_.erase(traversal_.begin(), traversal_.end());
+    traversal_.clear();
     }
     visited.resize(airports.size(), false);
     DFSHelper(startID, visited);
@@ -180,4 +242,21 @@ void AirportsMap::DFS(int startID) {
 //getter function
 Graph AirportsMap::getGraph() {
     return g_;
+}
+
+double AirportsMap::getDis(int startID, int destID) { //stoi会把-的string convert成 -int吗 答案：会； ok
+// 地球是个圆圈 convert latlng 需要check经度 180 -180        纬度没差 90-90
+    pair<double, double> pair1 = airports.find(startID)->second.getLatlng();
+    pair<double, double> pair2 = airports.find(destID)->second.getLatlng();
+    double lat1 = pair1.first;
+    double lat2 = pair2.first;
+    double latdiff = 0;
+    if (lat1 * lat2 >= 0) {
+        latdiff = lat1 - lat2;
+    } else {
+       latdiff =  min(abs(lat1 - lat2), 360 - abs(lat1-lat2));
+    }
+    double dis = latdiff * latdiff + (pair1.second - pair2.second)*(pair1.second - pair2.second);
+    dis  = sqrt(dis);
+    return dis;
 }

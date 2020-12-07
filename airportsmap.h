@@ -23,10 +23,13 @@
         AirportsMap(string txt);
         AirportsMap();
         void map_routes(string txt);
-        vector<int> dijkstra(int startID, int destID);
+        vector<pair<int, int>> dijkstra(int startID);
 
         void DFSHelper(int startID, vector<bool>& visited);
         void DFS(int startID);
+
+        double getDis(int startID, int destID);
+
 
         Graph getGraph();
 

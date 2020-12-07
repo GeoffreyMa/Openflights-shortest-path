@@ -69,7 +69,6 @@ void AirportsMap::airport_reader(string txt) {
                     airports[ID1] = cur_airport;
                 }
             }
-            // std::cout << airports[ID1].getID() << std::endl;
         }
     }    
 }

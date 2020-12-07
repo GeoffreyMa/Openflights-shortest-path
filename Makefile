@@ -23,7 +23,7 @@ CLANG_VERSION_MSG = $(warning $(ccyellow) Looks like you are not on EWS. Be sure
 endif
 endif
 
-.PHONY: output_msg
+.PHONY: all test clean output_msg
 
 all : $(EXENAME)
 
@@ -44,10 +44,10 @@ airportsmap.o : airportsmap.h airportsmap.cpp graphInfo/Airport.h
 Airport.o : graphInfo/Airport.h graphInfo/Airport.cpp
 	$(CXX) $(CXXFLAGS) graphInfo/Airport.cpp
 
-test: output_msg tests.o airportsmap.o graph.o Airport.o
-	$(LD) tests.o airportsmap.o graph.o $(LDFLAGS) -o test
+test: output_msg tests.o graph.o airportsmap.o Airport.o
+	$(LD) tests.o graph.o airportsmap.o Airport.o $(LDFLAGS) -o test
 
-tests.o: tests/tests.cpp catch/catch.hpp airportsmap.h graph.h graphInfo/Airport.h
+tests.o: tests/tests.cpp catch/catch.hpp airportsmap.h graph.h 
 	$(CXX) $(CXXFLAGS) tests/tests.cpp
 
 clean :

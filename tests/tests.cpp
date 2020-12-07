@@ -14,6 +14,6 @@ TEST_CASE("Creates the correct vertices") {
 
     Graph g = a_map.getGraph();
     REQUIRE(g.getVertices().size() == 3);
-    
+    REQUIRE(g.vertexExists("1"));
 }
 

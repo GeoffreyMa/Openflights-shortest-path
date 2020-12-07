@@ -105,8 +105,7 @@ void AirportsMap::map_routes(string txt){
             for (int i = 0; i < 9; i++){
                 if (i == 1) {
                     getline(ss, airlineID, ',');
-                }
-                if (i == 3){
+                } else if (i == 3){
                     getline(ss, ID1, ',');
                 } else if (i == 5){
                     getline(ss, ID2, ',');
@@ -121,7 +120,7 @@ void AirportsMap::map_routes(string txt){
             if (ID1 == "\\N" || ID2 == "\\N"){
                 continue;
             }
-
+            
             if (g_.vertexExists(ID1) == false){
                 g_.insertVertex(ID1);
             }

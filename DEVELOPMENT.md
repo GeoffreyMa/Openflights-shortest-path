@@ -31,3 +31,20 @@ Files were modified as follow: Makefile was created and adjusted accordingly. Ai
 
 [12-04-2020]
 * Modified airportsmap.cpp 
+
+# 12/11
+Updated Depth- first search and Dijkstra algorithm and implemented Landmark Path algorithm.
+
+[12-05-2020]
+* Added catch file
+* Modified Makefile for testing
+
+[12-06-2020]
+* Modified Makefile and added sample test file 
+
+[12-07-2020]
+* Added test case using the sample test file
+* Fixed minor error in airportsmap.cpp
+
+[12-08-2020]
+* Updated DFS and Dijkstra

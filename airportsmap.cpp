@@ -141,21 +141,22 @@ void AirportsMap::map_routes(string txt){
 }
 
 // the shortest path is represented by a vector of variable type int
-vector<pair<int, int>> AirportsMap::dijkstra(int startID){
+map<int, int> AirportsMap::dijkstra(int startID){
     vector<pair<int, int>> table;
     vector<double> shortestDis;
     vector<bool> visited;
     string start = to_string(startID);  
     //string dest = to_string(destID);
+    map<int, int> mapTable;
     if (g_.vertexExists(start) == false){
-        return table;
+        return mapTable;
     }
     // set table, visited, shortestDis vectors
-    for (int i = 0; i <= airports.size(); i++){
+    for (size_t i = 0; i <= airports.size(); i++){
         table.push_back(pair<int, int> (i, 0));//////////cehcccckccccccccccckkkkkkkkkkk
         visited[i] = false;
         shortestDis[i] = 32767;
-        if (i == startID){
+        if ((int)i == startID){
             visited[i] = true;
         }
     }
@@ -163,7 +164,7 @@ vector<pair<int, int>> AirportsMap::dijkstra(int startID){
 
     // set knownmin to startID
     //--------------------------------------------------晚上写的 帮忙check一下谢啦w(ﾟДﾟ)w， 不一定对ooooooooooooo；两个loop应该可以精简一下但是我懒得弄了
-    map<int, int> mapTable; // creatd a map for returning all the vertex and previous vertex;这里我用map存了路径 因为我在想如果输入一个起始的点不一定和整个graph连接？？ 不太确定；
+     // creatd a map for returning all the vertex and previous vertex;这里我用map存了路径 因为我在想如果输入一个起始的点不一定和整个graph连接？？ 不太确定；
     mapTable[startID] = 0; // initilize the previous vertex For startID；
     queue<int> q;
     q.push(startID);
@@ -184,7 +185,7 @@ vector<pair<int, int>> AirportsMap::dijkstra(int startID){
         vector<Vertex> adjIDs = g_.getAdjacent(to_string(tempID)); //current vertex周围所有的vertices；
         double mindis = shortestDis[stoi(adjIDs[0])]; //initialize 最小距离
         int nextVertex = -1; //initialize 下一个visited的vertex；
-        for (int i = 0; i < adjIDs.size(); i++) {
+        for (size_t i = 0; i < adjIDs.size(); i++) {
             if (shortestDis[stoi(adjIDs[i])] <= mindis && !visited[stoi(adjIDs[i])]) { //找到最小距离的vertex 并且没有visited过；
                 mindis = shortestDis[stoi(adjIDs[i])]; //有可能出现第一个最短但是是visited过的现象， 所以check <= mindis;
                 nextVertex = stoi(adjIDs[i]);
@@ -199,7 +200,7 @@ vector<pair<int, int>> AirportsMap::dijkstra(int startID){
 //-----------------------------------------------------------------------------------------------------------------------------------------以上
 
 
-    int knownmin = startID;
+    /*int knownmin = startID;
 
     while (knownmin != 0){
         vector<Vertex> v = g_.getAdjacent(to_string(knownmin));
@@ -208,10 +209,10 @@ vector<pair<int, int>> AirportsMap::dijkstra(int startID){
             
         }
         knownmin = 0;
-    }
+    }*/
 
     
-    return table;
+    return mapTable;
 }
 
 // DFS traversal helper

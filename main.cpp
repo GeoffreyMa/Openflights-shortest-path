@@ -4,9 +4,15 @@
 int main (int argc, const char * argv[]) {
     if (argc < 3){
         std::cout << "Default" << std::endl;
-        AirportsMap a_map("data/test_a1.txt");
-        a_map.map_routes("data/test_r1.txt");
-        a_map.dijkstra(2);
+       /* map<int, int> test;
+        test[0] = 1;
+        test[5] = 3;
+        for (size_t i = 0; i< test.size(); i++) {
+            cout<< i << "is:"<< test[i] << endl;
+        }*/
+        AirportsMap a_map("data/airports.txt");
+        a_map.map_routes("data/routes.txt");
+        a_map.dijkstra(3682);
         return 0;
     }
     std::string airport_file = argv[1];

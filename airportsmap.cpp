@@ -170,8 +170,10 @@ map<int, int> AirportsMap::dijkstra(int startID){
     // set knownmin to startID
     //--------------------------------------------------晚上写的 帮忙check一下谢啦w(ﾟДﾟ)w， 不一定对ooooooooooooo；两个loop应该可以精简一下但是我懒得弄了
      // creatd a map for returning all the vertex and previous vertex;这里我用map存了路径 因为我在想如果输入一个起始的点不一定和整个graph连接？？ 不太确定；
-    mapTable[startID] = 0; // initilize the previous vertex For startID；
-    mapTable[0] = -1;
+    // initilize the previous vertex For startID；
+
+
+    mapTable[startID] = -1;
     queue<int> q;
     q.push(startID);
     

@@ -120,7 +120,9 @@ void AirportsMap::map_routes(string txt){
             if (ID1 == "\\N" || ID2 == "\\N"){
                 continue;
             }
+            //std::cout << ID1 << " " << ID2 << std::endl;
             double distance = getDis(stoi(ID1), stoi(ID2)); // calculate the distance between two airport.
+            //std::cout << distance << std::endl;
             if (g_.vertexExists(ID1) == false){
                 g_.insertVertex(ID1);
             }
@@ -145,6 +147,9 @@ map<int, int> AirportsMap::dijkstra(int startID){
     vector<pair<int, int>> table;
     vector<double> shortestDis;
     vector<bool> visited;
+    visited.resize(airports.size()+1);
+
+    shortestDis.resize(airports.size()+1);
     string start = to_string(startID);  
     //string dest = to_string(destID);
     map<int, int> mapTable;
@@ -166,9 +171,12 @@ map<int, int> AirportsMap::dijkstra(int startID){
     //--------------------------------------------------晚上写的 帮忙check一下谢啦w(ﾟДﾟ)w， 不一定对ooooooooooooo；两个loop应该可以精简一下但是我懒得弄了
      // creatd a map for returning all the vertex and previous vertex;这里我用map存了路径 因为我在想如果输入一个起始的点不一定和整个graph连接？？ 不太确定；
     mapTable[startID] = 0; // initilize the previous vertex For startID；
+    mapTable[0] = -1;
     queue<int> q;
     q.push(startID);
+    
     while(!q.empty()) {
+        //cout << "e" <<endl;
         int tempID  = q.front(); //current visiting ID;
         q.pop();
         vector<Vertex> IDs = g_.getAdjacent(to_string(tempID));
@@ -211,7 +219,7 @@ map<int, int> AirportsMap::dijkstra(int startID){
         knownmin = 0;
     }*/
 
-    
+    for (size_t i = 0; i < mapTable.size(); i++) cout << mapTable[i] <<endl;
     return mapTable;
 }
 
